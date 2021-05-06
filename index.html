@@ -7,73 +7,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="style.css">
-
-        <script>
-            angular.module("listaTelefonica", ["ngMessages"]);
-            angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, $http){
-                $scope.app = "Lista Telefônica";
-                $scope.contatos = [];
-
-                $scope.adicionarContato = function(contato){
-                    contato.data = new Date();
-                    $http.post("http://localhost:3001/contatos", contato).then(function(response){
-                        console.log(contato.nome + " adicionado com sucesso");
-                    }).catch(function(response){
-                        $messageError = "Não foi possível adicionar o contato. Erro: " + response.status + " " + response.statusText
-                    });
-                    delete $scope.contato;
-                    $scope.contatoForm.$setPristine();
-                };
-
-                $scope.apagarContato = function(contatos){
-                    $scope.contatos = contatos.filter(function(contato){
-                        if(!contato.selecionado){
-                            console.log(contato.id)
-                            return contato;
-                        } else{
-                            $http.delete("http://localhost:3001/contatos/" + contato.id).then(function(response){
-                                console.log(contato.nome + " removido com sucesso");
-                            }).catch(function(response){
-                                $messageError = "Não foi possível apagar o contato. Erro: " + response.status + " " + response.statusText
-                            });
-                        }
-                    })
-                };
-
-                $scope.isContatoSelecionado = function(contatos){
-                    return contatos.some(function(contato){
-                        return contato.selecionado;
-                    })
-                }
-
-                $scope.operadoras = [];
-                $scope.ordenacao = 'nome';
-
-                $scope.ordenarPor = function(ordem){
-                    $scope.ordenacao = ordem;
-                    $scope.direcao = !$scope.direcao;
-                }
-
-                var carregarContatos = function(){
-                    $http.get("http://localhost:3001/contatos").then(function(response, status){
-                        $scope.contatos = response.data;
-                    }).catch(function(response, status){
-                        $scope.errorMessage = "Não foi possível carregar os contatos. Erro: " + response.status + " " + response.statusText;
-                    });
-                }
-
-                var carregarOperadoras = function(){
-                    $http.get("http://localhost:3001/operadoras").then(function(response, status){
-                        $scope.operadoras = response.data;
-                    }).catch(function(response, status){
-                        $scope.errorMessage = "Não foi possível carregar as operadoras. Erro: " + response.status + " " + response.statusText;
-                    });
-                }
-                carregarContatos();
-                carregarOperadoras();
-            });
-        </script>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/app.js"></script>
+        <script src="js/controllers/listaTelefonicaCtrl.js"></script>
     </head>
 
     <body ng-controller="listaTelefonicaCtrl">
@@ -81,7 +17,7 @@
             <h4 ng-bind="app" class="center" style="text-align: center; margin-bottom: 30px;"></h4>
 
             <input class="form-control" type="text" ng-model="busca" placeholder="Buscar por nome">
-            
+
             <h4 style="color: red; text-align: center;">{{errorMessage}}</h4>
 
             <table class="table table-striped">
@@ -147,6 +83,6 @@
             </div> -->
         </div>
         
-        <div ng-include="'footer.html'"></div>
+        <div ng-include="'views/footer.html'"></div>
     </body>
 </html>
