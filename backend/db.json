@@ -1,0 +1,136 @@
+{
+  "contatos": [
+    {
+      "id": 1,
+      "nome": "Bruno",
+      "telefone": "9999-2222",
+      "data": "1620305901150",
+      "operadora": {
+        "nome": "Oi",
+        "codigo": 14,
+        "categoria": "Celular"
+      },
+      "codigo": 14,
+      "categoria": "Celular"
+    },
+    {
+      "id": 2,
+      "nome": "Sandra",
+      "telefone": "9999-3333",
+      "data": "1620305909150",
+      "operadora": {
+        "nome": "Vivo",
+        "codigo": 15,
+        "categoria": "Celular"
+      },
+      "codigo": 15,
+      "categoria": "Celular"
+    },
+    {
+      "id": 3,
+      "nome": "Mariana",
+      "telefone": "9999-9999",
+      "data": "1600309901150",
+      "operadora": {
+        "nome": "Tim",
+        "codigo": 41,
+        "categoria": "Celular"
+      },
+      "codigo": 41,
+      "categoria": "Celular"
+    },
+    {
+      "nome": "Julia",
+      "telefone": "9999-4442",
+      "data": "1620005901150",
+      "id": 4
+    },
+    {
+      "nome": "Funcao",
+      "telefone": "5050-4040",
+      "operadora": {
+        "id": 5,
+        "nome": "Embratel",
+        "codigo": 21,
+        "categoria": "Fixo",
+        "preco": 2
+      },
+      "data": "2021-05-06T13:49:20.458Z",
+      "id": 5
+    },
+    {
+      "nome": "Salve",
+      "telefone": "5040-8090",
+      "operadora": {
+        "id": 2,
+        "nome": "Oi",
+        "codigo": 15,
+        "categoria": "Celular",
+        "preco": 2
+      },
+      "data": "2021-05-06T13:50:14.777Z",
+      "id": 6
+    },
+    {
+      "nome": "teste",
+      "telefone": "5050-8090",
+      "operadora": {
+        "id": 3,
+        "nome": "Vivo",
+        "codigo": 14,
+        "categoria": "Celular",
+        "preco": 1
+      },
+      "data": "2021-05-06T13:54:09.937Z",
+      "id": 7
+    },
+    {
+      "nome": "testete",
+      "telefone": "8080-4040",
+      "operadora": {
+        "nome": "Claro",
+        "codigo": "015",
+        "categoria": "Celular"
+      },
+      "data": "2021-05-06T13:55:26.930Z",
+      "id": 8
+    }
+  ],
+  "operadoras": [
+    {
+      "id": 1,
+      "nome": "Tim",
+      "codigo": 41,
+      "categoria": "Celular",
+      "preco": 3
+    },
+    {
+      "id": 2,
+      "nome": "Oi",
+      "codigo": 15,
+      "categoria": "Celular",
+      "preco": 2
+    },
+    {
+      "id": 3,
+      "nome": "Vivo",
+      "codigo": 14,
+      "categoria": "Celular",
+      "preco": 1
+    },
+    {
+      "id": 4,
+      "nome": "GVT",
+      "codigo": 25,
+      "categoria": "Fixo",
+      "preco": 1
+    },
+    {
+      "id": 5,
+      "nome": "Embratel",
+      "codigo": 21,
+      "categoria": "Fixo",
+      "preco": 2
+    }
+  ]
+}

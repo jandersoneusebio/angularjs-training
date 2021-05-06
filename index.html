@@ -8,46 +8,70 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="style.css">
+
         <script>
             angular.module("listaTelefonica", ["ngMessages"]);
-            angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope){
+            angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, $http){
                 $scope.app = "Lista Telefônica";
-                $scope.contatos = [
-                    {nome: "Janderson", telefone: "99887766", data: new Date(), operadora: {nome: "Tim", codigo: "041", categoria: "Celular"}},
-                    {nome: "Ana", telefone: "99887755", data: new Date(), operadora: {nome: "Claro", codigo: "015", categoria: "Celular"}},
-                    {nome: "Vanessa", telefone: "99887744", data: new Date(), operadora: {nome: "Oi", codigo: "014", categoria: "Celular"}}
-                ];
+                $scope.contatos = [];
+
                 $scope.adicionarContato = function(contato){
                     contato.data = new Date();
-                    $scope.contatos.push(contato);
+                    $http.post("http://localhost:3001/contatos", contato).then(function(response){
+                        console.log(contato.nome + " adicionado com sucesso");
+                    }).catch(function(response){
+                        $messageError = "Não foi possível adicionar o contato. Erro: " + response.status + " " + response.statusText
+                    });
                     delete $scope.contato;
                     $scope.contatoForm.$setPristine();
                 };
+
                 $scope.apagarContato = function(contatos){
                     $scope.contatos = contatos.filter(function(contato){
                         if(!contato.selecionado){
+                            console.log(contato.id)
                             return contato;
+                        } else{
+                            $http.delete("http://localhost:3001/contatos/" + contato.id).then(function(response){
+                                console.log(contato.nome + " removido com sucesso");
+                            }).catch(function(response){
+                                $messageError = "Não foi possível apagar o contato. Erro: " + response.status + " " + response.statusText
+                            });
                         }
                     })
                 };
+
                 $scope.isContatoSelecionado = function(contatos){
                     return contatos.some(function(contato){
                         return contato.selecionado;
                     })
                 }
-                $scope.operadoras = [
-                    {nome: "Tim", codigo: "041", categoria: "Celular"},
-                    {nome: "Claro", codigo: "015", categoria: "Celular"},
-                    {nome: "Oi", codigo: "014", categoria: "Celular"},
-                    {nome: "GVT", codigo: "025", categoria: "Fixo"},
-                    {nome: "Embratel", codigo: "021", categoria: "Fixo"}
-                ];
+
+                $scope.operadoras = [];
                 $scope.ordenacao = 'nome';
+
                 $scope.ordenarPor = function(ordem){
                     $scope.ordenacao = ordem;
                     $scope.direcao = !$scope.direcao;
-                    
                 }
+
+                var carregarContatos = function(){
+                    $http.get("http://localhost:3001/contatos").then(function(response, status){
+                        $scope.contatos = response.data;
+                    }).catch(function(response, status){
+                        $scope.errorMessage = "Não foi possível carregar os contatos. Erro: " + response.status + " " + response.statusText;
+                    });
+                }
+
+                var carregarOperadoras = function(){
+                    $http.get("http://localhost:3001/operadoras").then(function(response, status){
+                        $scope.operadoras = response.data;
+                    }).catch(function(response, status){
+                        $scope.errorMessage = "Não foi possível carregar as operadoras. Erro: " + response.status + " " + response.statusText;
+                    });
+                }
+                carregarContatos();
+                carregarOperadoras();
             });
         </script>
     </head>
@@ -57,6 +81,9 @@
             <h4 ng-bind="app" class="center" style="text-align: center; margin-bottom: 30px;"></h4>
 
             <input class="form-control" type="text" ng-model="busca" placeholder="Buscar por nome">
+            
+            <h4 style="color: red; text-align: center;">{{errorMessage}}</h4>
+
             <table class="table table-striped">
                 <tr>
                     <th></th>
@@ -79,7 +106,7 @@
             <form name="contatoForm">
                 <input class="form-control" type="text" placeholder="Nome" name="nome" ng-model="contato.nome" ng-required="true" ng-minlength="5">
                 <input class="form-control" type="text" placeholder="Telefone" name="telefone" ng-model="contato.telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/">
-                <select class="form-control" ng-model="contato.operadora" name="operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras | orderBy: 'nome'" ng-required="true">
+                <select class="form-control" ng-model="contato.operadora" name="operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras | orderBy: 'nome' | orderBy: 'categoria'" ng-required="true">
                 <!-- <select class="form-control" ng-model="contato.operadora" ng-options="operadora.codigo as operadora.nome for operadora in operadoras"> -->
                     <option value="">Selecione uma operadora</option>
                 </select>
