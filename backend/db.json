@@ -44,6 +44,20 @@
       },
       "data": "2021-05-06T13:49:20.458Z",
       "id": 5
+    },
+    {
+      "nome": "Janderson",
+      "telefone": "8888-9999",
+      "operadora": {
+        "id": 3,
+        "nome": "Vivo",
+        "codigo": 14,
+        "categoria": "Celular",
+        "preco": 1
+      },
+      "serial": "=Q&'_5AY4$[M24.R0KL ",
+      "data": "2021-05-09T18:57:41.521Z",
+      "id": 6
     }
   ],
   "operadoras": [

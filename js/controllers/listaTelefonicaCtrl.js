@@ -1,10 +1,18 @@
-angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, $http){
+angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, contatosService, operadorasService, serialGenerator){
     $scope.app = "Lista Telefônica";
+
+    $scope.operadoras = [];
     $scope.contatos = [];
 
+    $scope.ordenacao = 'nome';
+
+    // Contatos Functions
     $scope.adicionarContato = function(contato){
+
+        contato.serial = serialGenerator.generate();
+
         contato.data = new Date();
-        $http.post("http://localhost:3001/contatos", contato).then(function(response){
+        contatosService.addContato(contato).then(function(){
             console.log(contato.nome + " adicionado com sucesso");
         }).catch(function(response){
             $messageError = "Não foi possível adicionar o contato. Erro: " + response.status + " " + response.statusText
@@ -19,7 +27,7 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($sc
                 console.log(contato.id)
                 return contato;
             } else{
-                $http.delete("http://localhost:3001/contatos/" + contato.id).then(function(response){
+                contatosService.deleteContatos(contato).then(function(response){
                     console.log(contato.nome + " removido com sucesso");
                 }).catch(function(response){
                     $messageError = "Não foi possível apagar o contato. Erro: " + response.status + " " + response.statusText
@@ -34,28 +42,25 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($sc
         })
     }
 
-    $scope.operadoras = [];
-    $scope.ordenacao = 'nome';
-
-    $scope.ordenarPor = function(ordem){
-        $scope.ordenacao = ordem;
-        $scope.direcao = !$scope.direcao;
-    }
-
     var carregarContatos = function(){
-        $http.get("http://localhost:3001/contatos").then(function(response, status){
+        contatosService.getContatos().then(function(response){
             $scope.contatos = response.data;
-        }).catch(function(response, status){
+        }).catch(function(response){
             $scope.errorMessage = "Não foi possível carregar os contatos. Erro: " + response.status + " " + response.statusText;
         });
     }
 
     var carregarOperadoras = function(){
-        $http.get("http://localhost:3001/operadoras").then(function(response, status){
+        operadorasService.getOperadoras().then(function(response){
             $scope.operadoras = response.data;
-        }).catch(function(response, status){
+        }).catch(function(response){
             $scope.errorMessage = "Não foi possível carregar as operadoras. Erro: " + response.status + " " + response.statusText;
         });
+    }
+
+    $scope.ordenarPor = function(ordem){
+        $scope.ordenacao = ordem;
+        $scope.direcao = !$scope.direcao;
     }
     carregarContatos();
     carregarOperadoras();
