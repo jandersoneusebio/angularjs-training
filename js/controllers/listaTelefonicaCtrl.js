@@ -1,8 +1,6 @@
 angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, contatosService, operadorasService, serialGenerator){
     $scope.app = "Lista Telefônica";
 
-    console.log(serialGenerator.generate());
-
     $scope.operadoras = [];
     $scope.contatos = [];
 
@@ -64,6 +62,6 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($sc
         $scope.ordenacao = ordem;
         $scope.direcao = !$scope.direcao;
     }
-    carregarContatos();
     carregarOperadoras();
+    carregarContatos();
 });
