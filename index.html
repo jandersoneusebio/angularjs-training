@@ -15,6 +15,8 @@
         <script src="js/services/serialGeneratorService.js"></script>
         <script src="js/consts/configValue.js"></script>
         <script src="js/config/serialGeneratorConfig.js"></script>
+        <script src="js/filters/nameFilter.js"></script>
+        <script src="js/filters/nameLimitFilter.js"></script>
 
     </head>
 
@@ -38,7 +40,7 @@
                 <tr ng-repeat="contato in contatos | filter: {nome: busca} | orderBy: ordenacao: direcao" ng-class="{selecionado: contato.selecionado}">
                     <td><input type="checkbox" ng-model="contato.selecionado"></td>
                     <td>{{contato.serial}}</td>
-                    <td>{{contato.nome}}</td>
+                    <td>{{contato.nome | name | nameLimit: 14}}</td>
                     <td>{{contato.telefone}}</td>
                     <td>{{contato.operadora.nome}}</td>
                     <td>{{contato.data | date: 'dd/MM/yyyy'}}</td>
