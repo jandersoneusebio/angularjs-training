@@ -4,6 +4,10 @@ angular.module("listaTelefonica").factory("contatosService", function($http, con
         return $http.get(config.baseUrl + "contatos");
     }
 
+    var _getContato = function(id){
+        return $http.get(config.baseUrl + "contatos/" + id);
+    }
+
     var _addContato = function(contato){
         return $http.post(config.baseUrl + "contatos", contato);
     }
@@ -14,6 +18,7 @@ angular.module("listaTelefonica").factory("contatosService", function($http, con
     
     return {
         getContatos: _getContatos,
+        getContato: _getContato,
         addContato: _addContato,
         deleteContatos: _deleteContatos
     }

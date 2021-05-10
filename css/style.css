@@ -34,3 +34,9 @@
 .orderBy{
     text-decoration: none;
 }
+
+.top-title{
+    font-weight: 200;
+    text-align: center;
+    margin: 0px 0px 30px 30px
+}

@@ -3,7 +3,7 @@
 <html ng-app="listaTelefonica">
     <head>
         <meta charset="utf-8">
-        <title>Lista telefônica</title>
+        <title>Lista Telefônica</title>
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -12,110 +12,27 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.js"></script>
         <script src="js/app.js"></script>
         <script src="js/controllers/listaTelefonicaCtrl.js"></script>
+        <script src="js/controllers/addContatoCtrl.js"></script>
+        <script src="js/controllers/detalhesContatoCtrl.js"></script>
         <script src="js/services/contatosService.js"></script>
         <script src="js/services/operadorasService.js"></script>
         <script src="js/consts/configValue.js"></script>
+        <script src="js/config/routeConfig.js"></script>
         <script src="js/filters/nameFilter.js"></script>
         <script src="js/filters/nameLimitFilter.js"></script>
         <script src="js/directives/uiAlertDirective.js"></script>
         <script src="js/directives/uiDateDirective.js"></script>
         <script src="lib/uiAccordion.js"></script>
         <script src="lib/serialGenerator.js"></script>
-
+        
     </head>
 
-    <body ng-controller="listaTelefonicaCtrl">
-        <div class="content center light-gray rounded-corner">
-            <h4 ng-bind="app" class="center" style="text-align: center; margin-bottom: 30px;"></h4>
-            
-            <ui-accordions>
-                <ui-accordion title="Accordion 1">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </ui-accordion>
-    
-                <ui-accordion title="Accordion 2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </ui-accordion>
-            </ui-accordions>
-
-            <hr>
-
-            <input class="form-control" type="text" ng-model="busca" placeholder="Buscar por nome">
-
-            <hr>
-
-            <!-- <ui-alert title="Ops! Houve um problema :(" content="errorMessage">
-                {{errorMessage}}
-            </ui-alert> -->
-
-            <!-- <h4 style="color: red; text-align: center; font-weight: 100;">{{errorMessage}}</h4> -->
-
-            <table class="table table-striped" ng-show="contatos.length > 0">
-                <tr>
-                    <th></th>
-                    <th><a href="" ng-click="ordenarPor('nome')" class="orderBy">Nome</a></th>
-                    <th><a href="" ng-click="ordenarPor('telefone')" class="orderBy">Telefone</a></th>
-                    <th><a href="" ng-click="ordenarPor('operadora')" class="orderBy">Operadora</a></th>
-                    <th><a href="" ng-click="ordenarPor('data')" class="orderBy">Data de admissão</a></th>
-                </tr>
-                <tr ng-repeat="contato in contatos | filter: {nome: busca} | orderBy: ordenacao: direcao" ng-class="{selecionado: contato.selecionado}">
-                    <td><input type="checkbox" ng-model="contato.selecionado"></td>
-                    <td>{{contato.nome | name | nameLimit: 14}}</td>
-                    <td>{{contato.telefone}}</td>
-                    <td>{{contato.operadora.nome}}</td>
-                    <td>{{contato.data | date: 'dd/MM/yyyy'}}</td>
-                </tr> 
-            </table>
-
-            <hr>
-
-            <form name="contatoForm">
-                <input class="form-control" type="text" placeholder="Nome" name="nome" ng-model="contato.nome" ng-required="true" ng-minlength="5">
-                <input class="form-control" type="text" placeholder="Telefone" name="telefone" ng-model="contato.telefone" ng-required="true" ng-pattern="/^\d{4,5}-\d{4}$/">
-                <input class="form-control" type="text" placeholder="Data de Admissão" name="data" ng-model="contato.data" ng-required="true" ui-date>
-
-                <select class="form-control" ng-model="contato.operadora" name="operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras | orderBy: 'nome' | orderBy: 'categoria'" ng-required="true">
-                <!-- <select class="form-control" ng-model="contato.operadora" ng-options="operadora.codigo as operadora.nome for operadora in operadoras"> -->
-                    <option value="">Selecione uma operadora</option>
-                </select>
-                <!-- 
-                    ng-pattern = regularExpression -> pode ser usado para definir um padrão esperado, caso o valor digitado não atenda ao padrão, lança um 'error' que pode ser retornado usando '$error.pattern'
-                    Exemplo de uma expressão regular: /^\d{4,5}-\d{4}$/  -> ^: Início do padrão  |  \d: dígitos  |  $: fim do padrão
-                    ng-minlength -> Declara a quantidade miníma de caracteres, lança um 'error' caso true, pode ser acessado usando '$error.minlength'
-                    ng-maxlength -> Declara a quantidade máxima de caracteres, lança um 'error' caso true, pode ser acessado usando '$error.maxlength'
-                 -->
-            </form>
-            <button class="btn btn-primary btn-block" ng-click = "adicionarContato(contato)" ng-disabled="contatoForm.$invalid">Adicionar Contato</button>
-            <!-- ng-if = Altera a DOM, remove ou adiciona um elemento na DOM. Bom para fazer Lazy Load (economia de recursos, + desempenho) -->
-            <!-- ng-show e ng-hide = Altera apenas o css "display: none/inline-block" -->
-            <button class="btn btn-danger btn-block" ng-click = "apagarContato(contatos)" ng-disabled="!(isContatoSelecionado(contatos))">Excluir Contato</button>
-            <br>
-
-            <div class="alert alert-danger" ng-if="contatoForm.$invalid && contatoForm.$dirty" ng-messages="contatoForm.$invalid">
-                Preencha o formulário corretamente:
-                <ul ng-messages="contatoForm.nome.$error">
-                    <li ng-message="required">O campo Nome é obrigatório</li>
-                    <li ng-message="minlength">O campo Nome precisa ter mais de 5 caracteres.</li> 
-                </ul>
-                <ul ng-messages="contatoForm.telefone.$error">
-                    <li ng-message="required">O campo Telefone é obrigatório</li>
-                    <li ng-message="pattern">O campo Telefone precisa ser informado no formato "#####-####".</li> 
-                </ul>
-                <ul>
-                    <li ng-show="contatoForm.operadora.$invalid">O campo Operadora é obrigatório</li>
-                </ul>
-            </div>
-            <!-- <div class="alert alert-danger" ng-if="contatoForm.$invalid && contatoForm.$dirty">
-                Preencha o formulário corretamente:
-                <ul>
-                    <li ng-show="contatoForm.nome.$invalid">O campo Nome é obrigatório</li>
-                    <li ng-show="contatoForm.telefone.$invalid">O campo Telefone é obrigatório</li>
-                    <li ng-show="contatoForm.operadora.$invalid">O campo Operadora é obrigatório</li>
-                </ul>
-            </div> -->
-        </div>
+    <body>
+        <div ng-view></div>
+        
         
         <div ng-include="'views/footer.html'"></div>
     </body>

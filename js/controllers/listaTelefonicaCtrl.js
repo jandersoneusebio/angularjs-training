@@ -1,28 +1,9 @@
-angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, contatosService, operadorasService, serialGenerator){
+angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, contatosService, contatos){
     $scope.app = "Lista Telefônica";
 
-    $scope.operadoras = [];
-    $scope.contatos = [];
-    $scope.contato = {
-        data: 1620612732291
-    }
+    $scope.contatos = contatos.data;
 
     $scope.ordenacao = 'nome';
-
-    // Contatos Functions
-    $scope.adicionarContato = function(contato){
-
-        contato.serial = serialGenerator.generate();
-
-        //contato.data = new Date();
-        contatosService.addContato(contato).then(function(){
-            console.log(contato.nome + " adicionado com sucesso");
-        }).catch(function(response){
-            $messageError = "Não foi possível adicionar o contato. Erro: " + response.status + " " + response.statusText
-        });
-        delete $scope.contato;
-        $scope.contatoForm.$setPristine();
-    };
 
     $scope.apagarContato = function(contatos){
         $scope.contatos = contatos.filter(function(contato){
@@ -45,26 +26,8 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($sc
         })
     }
 
-    var carregarContatos = function(){
-        contatosService.getContatos().then(function(response){
-            $scope.contatos = response.data;
-        }).catch(function(response){
-            $scope.errorMessage = "Não foi possível carregar os contatos. Erro: " + response.status + " " + response.statusText;
-        });
-    }
-
-    var carregarOperadoras = function(){
-        operadorasService.getOperadoras().then(function(response){
-            $scope.operadoras = response.data;
-        }).catch(function(response){
-            $scope.errorMessage = "Não foi possível carregar as operadoras. Erro: " + response.status + " " + response.statusText;
-        });
-    }
-
     $scope.ordenarPor = function(ordem){
         $scope.ordenacao = ordem;
         $scope.direcao = !$scope.direcao;
     }
-    carregarOperadoras();
-    carregarContatos();
 });
