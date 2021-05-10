@@ -23,12 +23,25 @@
         <script src="js/filters/nameLimitFilter.js"></script>
         <script src="js/directives/uiAlertDirective.js"></script>
         <script src="js/directives/uiDateDirective.js"></script>
+        <script src="js/directives/uiAccordionDirective.js"></script>
 
     </head>
 
     <body ng-controller="listaTelefonicaCtrl">
         <div class="content center light-gray rounded-corner">
             <h4 ng-bind="app" class="center" style="text-align: center; margin-bottom: 30px;"></h4>
+            
+            <ui-accordions>
+                <ui-accordion title="Accordion 1">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </ui-accordion>
+    
+                <ui-accordion title="Accordion 2">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </ui-accordion>
+            </ui-accordions>
+
+            <hr>
 
             <input class="form-control" type="text" ng-model="busca" placeholder="Buscar por nome">
 
