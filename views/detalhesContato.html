@@ -1,13 +1,13 @@
 <div class="center content light-gray rounded-corner" style="margin-top: 15%;">
     <table class="table table-striped">
         <tr>
-            <td>Nome completo: {{contato.nome | name}}</td>
+            <td>Nome completo: {{::contato.nome | name}}</td>
         </tr>
         <tr>
-            <td>Telefone: {{contato.telefone}}</td>
+            <td>Telefone: {{::contato.telefone}}</td>
         </tr>
         <tr>
-            <td>Data de admissão: {{contato.data | date: "dd/MM/yyyy hh:mm"}}</td>
+            <td>Data de admissão: {::{contato.data | date: "dd/MM/yyyy hh:mm"}}</td>
         </tr>
     </table>
     <a href="#/contatos"><button class="btn btn-primary">Voltar</button></a>

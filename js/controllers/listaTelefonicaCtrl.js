@@ -67,5 +67,9 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($sc
         $scope.direcao = !$scope.direcao;
     }
 
+    $scope.reset = function(){
+        $scope.contatos = angular.copy($scope.contatos);
+    }
+
     init()
 });

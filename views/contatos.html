@@ -19,7 +19,7 @@
             <th><a href="" ng-click="ordenarPor('operadora.preco')" class="orderBy">Preço</a></th>
             <th><a href="" ng-click="ordenarPor('data')" class="orderBy">Data de admissão</a></th>
         </tr>
-        <tr ng-repeat="contato in contatos | filter: {nome: busca} | orderBy: ordenacao: direcao" ng-class="{selecionado: contato.selecionado}">
+        <tr ng-repeat="contato in contatos | filter: {nome: busca} | orderBy: ordenacao: direcao track by contato.id" ng-class="{selecionado: contato.selecionado}">
             <td><input type="checkbox" ng-model="contato.selecionado" ng-click="verificarSelecao(contatos)"></td>
             <td><a href="#/detalhesContato/{{contato.id}}">{{::contato.nome | name | nameLimit: 14}}</a></td>
             <td>{{::contato.telefone}}</td>
