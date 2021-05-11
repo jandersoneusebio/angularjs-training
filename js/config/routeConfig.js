@@ -20,6 +20,14 @@ angular.module("listaTelefonica").config(function($routeProvider, $locationProvi
         }
     });
 
+    $routeProvider.when("/error", {
+        templateUrl: "views/error.html"
+    })
+
+    $routeProvider.when("/errorBd", {
+        templateUrl: "views/errorBd.html"
+    })
+
     $routeProvider.when("/detalhesContato/:id",{
         templateUrl: "views/detalhesContato.html",
         controller: "detalhesContatoCtrl",

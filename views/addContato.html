@@ -18,6 +18,7 @@
     </form>
     
     <button class="btn btn-primary btn-block" ng-click = "adicionarContato(contato)" ng-disabled="contatoForm.$invalid">Adicionar Contato</button>
+    <a href="#/contatos"><button class="btn btn-outline-primary btn-block">Voltar</button></a>
     
     <div class="alert alert-danger" ng-if="contatoForm.$invalid && contatoForm.$dirty" ng-messages="contatoForm.$invalid">
         Preencha o formulário corretamente:
