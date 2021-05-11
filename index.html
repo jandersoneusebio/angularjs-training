@@ -28,15 +28,19 @@
         <script src="js/directives/uiDateDirective.js"></script>
         <script src="js/interceptors/timestampInterceptor.js"></script>
         <script src="js/interceptors/errorInterceptor.js"></script>
+        <script src="js/interceptors/loadingInterceptor.js"></script>
         <script src="lib/uiAccordion.js"></script>
         <script src="lib/serialGenerator.js"></script>
         
     </head>
 
     <body>
-        <div ng-view></div>
-        
-        
-        <div ng-include="'views/footer.html'"></div>
+        <div ng-show="loading" class="loading-screen" style="text-align: center;">
+            <img src="img/loading.gif" width="75vh">
+        </div>
+        <div ng-hide="loading">
+            <div ng-view></div>
+            <div ng-include="'views/footer.html'"></div>
+        </div>
     </body>
 </html>
