@@ -3,6 +3,9 @@ angular.module("listaTelefonica").controller("addContatoCtrl", function($scope, 
 
     $scope.operadoras = operadoras.data
 
+    var c = 0;
+    console.log(c++)
+
     $scope.adicionarContato = function(contato){
 
         contato.serial = serialGenerator.generate();

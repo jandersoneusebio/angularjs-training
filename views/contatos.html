@@ -1,7 +1,7 @@
 <div class="content center light-gray rounded-corner">
     <h2 ng-bind="app" style="text-align: center; margin-bottom: 30px; font-weight: 400;"></h2>
     <hr>
-    <input class="form-control" type="text" ng-model="busca" placeholder="Buscar por nome">
+    <input class="form-control" type="text" ng-model="busca" ng-model-options="{updateOn: 'default', debounce: 250}" placeholder="Buscar por nome">
     <hr>
 
     <!-- <ui-alert title="Ops! Houve um problema :(" content="errorMessage">
@@ -15,15 +15,23 @@
             <th></th>
             <th><a href="" ng-click="ordenarPor('nome')" class="orderBy">Nome</a></th>
             <th><a href="" ng-click="ordenarPor('telefone')" class="orderBy">Telefone</a></th>
-            <th><a href="" ng-click="ordenarPor('operadora')" class="orderBy">Operadora</a></th>
+            <th><a href="" ng-click="ordenarPor('operadora.nome')" class="orderBy">Operadora</a></th>
+            <th><a href="" ng-click="ordenarPor('operadora.preco')" class="orderBy">Preço</a></th>
             <th><a href="" ng-click="ordenarPor('data')" class="orderBy">Data de admissão</a></th>
         </tr>
         <tr ng-repeat="contato in contatos | filter: {nome: busca} | orderBy: ordenacao: direcao" ng-class="{selecionado: contato.selecionado}">
-            <td><input type="checkbox" ng-model="contato.selecionado"></td>
-            <td><a href="#/detalhesContato/{{contato.id}}">{{contato.nome | name | nameLimit: 14}}</a></td>
-            <td>{{contato.telefone}}</td>
-            <td>{{contato.operadora.nome}}</td>
-            <td>{{contato.data | date: 'dd/MM/yyyy'}}</td>
+            <td><input type="checkbox" ng-model="contato.selecionado" ng-click="verificarSelecao(contatos)"></td>
+            <td><a href="#/detalhesContato/{{contato.id}}">{{::contato.nome | name | nameLimit: 14}}</a></td>
+            <td>{{::contato.telefone}}</td>
+            <td>{{::contato.operadora.nome}}</td>
+            <td>{{::contato.operadora.preco | currency: 'R$ ' }}</td>
+            <td>{{::contato.data | date: 'dd/MM/yyyy'}}</td>
+
+            <!-- 
+                :: <- se refere à o one-time-bind, ele retira os watchers do angular da variável
+                deixando o app com mais desempenho (usar quando forem valores fixos)
+            -->
+
         </tr> 
     </table>
     <hr>
@@ -32,6 +40,7 @@
     <!-- ng-show e ng-hide = Altera apenas o css "display: none/inline-block" -->
 
     <a href="#/addContato"><button class="btn btn-primary btn-block">Adicionar Contato</button></a>
-    <button class="btn btn-danger btn-block" ng-click = "apagarContato(contatos)" ng-disabled="!(isContatoSelecionado(contatos))">Excluir Contato</button>
+    <!-- Main function broke after trying to get a better performance, i'll try to fix this later -->
+    <button class="btn btn-danger btn-block" ng-click="apagarContato(contatos)" ng-disabled="disable">Excluir Contato</button>
     <br>
 </div>
